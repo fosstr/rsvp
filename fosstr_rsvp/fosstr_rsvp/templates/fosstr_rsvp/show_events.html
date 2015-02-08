@@ -1,0 +1,24 @@
+{% extends 'fosstr_rsvp/base.html' %}
+
+{% load bootstrap3 %}
+
+{% block title %}Showing all events under FOSSTR{% endblock %}
+
+{% block bootstrap3_content %}
+<center>
+	<table class="table table-striped">
+		<tr>
+			<th>Event Name</th>
+			<th>Description</th>
+			<th>Date</th>
+		</tr>
+		{% for event in events %}
+		<tr>
+			<td> <a href="/rsvp/event/{{ event.slug }}/"> {{ event.title }} </a></td>
+			<td> {{ event.description }}</td>
+			<td> {{ event.date_of_event }}</td>
+		</tr>
+		{% endfor %}
+	</table>
+</center>
+{% endblock %}

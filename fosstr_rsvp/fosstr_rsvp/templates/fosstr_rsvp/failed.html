@@ -1,0 +1,15 @@
+{% extends 'fosstr_rsvp/base.html' %}
+
+{% load bootstrap3 %}
+
+{% block title %}RSVP Failed{% endblock %}
+
+{% block bootstrap3_content %}
+<center>
+<div class="alert alert-danger" role="alert">
+        <strong>Alas! Your RSVP failed</strong></br>
+        Ensure you completed the reCAPTHA and have correctly filled out the RSVP form</br>
+        If you continue to face issues. contact us at help@fosstr.org
+</div>
+<center>
+{% endblock %}

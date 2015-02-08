@@ -20,11 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = '!ub%nyha=zn#r@o0+@8+_xh(o4(ig7@u4nh+w)+23q=g0m5)c0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+# Change this during Production
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -36,6 +37,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bootstrap3',
+    'fosstr_rsvp',
 )
 
 MIDDLEWARE_CLASSES = (

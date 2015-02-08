@@ -1,0 +1,43 @@
+{% extends 'fosstr_rsvp/base.html' %}
+
+{% load bootstrap3 %}
+
+{% block title %}Viewing Event {{ event.title }}{% endblock %}
+
+{% block bootstrap3_content %}
+<center>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<div class="jumbotron">
+    <h2>{{ event.title }}</h2>
+    <p>Date: {{ event.date_of_event|date:"F j, Y @ f a" }}</p>
+    <p>{{ event.description|linebreaksbr }}</p>
+    {% if event.hosted_by %}
+        <p>
+            <strong>Hosted By:</strong>
+            {{ event.hosted_by }}
+        </p>
+    {% endif %}   
+    {% if event.street_address %}
+        <p>
+            <strong>Address:</strong><br>
+            {{ event.street_address }}<br>
+            {{ event.city }}, {{ event.state }} {{ event.zip_code }}<br>
+            {{ event.telephone }}
+        </p>
+    {% endif %}
+    </div>
+</center>
+<div class="panel panel-default">
+  <div class="panel-body">
+    <div class="panel panel-default">
+    <div class="panel-heading">RSVP to the weekly meetup</div>
+</div>
+    <form action="." role="form" method="post" enctype="multipart/form-data" class="form-vertical">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <div class="g-recaptcha" data-sitekey="6Ld58QATAAAAAFUDr06La8MGLudMmxOaDDjbMQNx"></div><br>
+        {% buttons submit='RSVP' reset="Cancel" %}{% endbuttons %}
+      </form>
+  </div>
+</div>
+{% endblock %}
