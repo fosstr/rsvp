@@ -1,11 +1,5 @@
 import datetime
 from django.db import models
-from django.db.models import permalink
-from django.core.mail import send_mass_mail
-from django.template import loader, Context
-from django.conf import settings
-from django.contrib.sites.models import Site
-
 
 ATTENDING_CHOICES = (
     ('yes', 'Yes'),

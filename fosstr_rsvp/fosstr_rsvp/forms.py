@@ -1,6 +1,4 @@
-from django.utils.translation import ugettext as _
 from django import forms
-from django.core.exceptions import ObjectDoesNotExist
 from models import ATTENDING_CHOICES, Guest, IS_STUDENT_CHOICE
 
 
