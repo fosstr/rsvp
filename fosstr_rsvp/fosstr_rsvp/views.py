@@ -66,7 +66,7 @@ class EventView(FormView):
     		guest_is_student = request.REQUEST['are_you_a_student']
     		is_guest_present = Guest.objects.filter(Q(email=guest_email))
     		if is_guest_present:
-    			return HttpResponseRedirect('/rsvp/event/%s/duplicate/')
+    			return HttpResponseRedirect('/rsvp/event/%s/duplicate/' % slug )
     		Guest.objects.create(event=event, email=guest_email, name=guest_name, attending_status=guest_attending_status,associated_organization=guest_associated_organization, is_student=guest_is_student)
     		return HttpResponseRedirect('/rsvp/event/%s/thanks/' % slug)
     	except Exception,f:
