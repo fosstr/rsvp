@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect, Http404
 from models import Event, Guest
+from django.db.models import Q
 from forms import RSVPForm
 from django.views.generic import FormView
 from django.views.generic.base import TemplateView
