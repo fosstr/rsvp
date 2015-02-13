@@ -2,6 +2,8 @@
 
 {% load bootstrap3 %}
 
+{% load staticfiles %}
+
 {% block title %}Thanks For RSVPing to {{ event.title }}{% endblock %}
 
 {% block bootstrap3_content %}
@@ -9,9 +11,9 @@
 <div class="alert alert-success" role="alert">
     <strong>Thanks For RSVPing To {{ event.title }}</strong>
     </br>
-        You've been placed on the attendes for the {{ event.title }}</a>.
+        You've been placed on the attendes for the {{ event.title }}.
 	</br>
-	<a href='static/fosstr-weekly.ics'>Click here</a> to download an iCal invitation for the event
+	See you there
 </div>
 </center>
 {% endblock %}
