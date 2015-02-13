@@ -28,6 +28,19 @@ class DuplicateRsvp(TemplateView):
 		except Exception,e:
 			raise Http404()
 
+class RsvpDenied(TemplateView):
+	template_name = 'fosstr_rsvp/deniedrsvp.html'
+
+	def get_context_data(self, **kwargs):
+		try:
+			slug = self.kwargs['slug']
+			event = get_object_or_404(Event, slug=slug)
+			context = super(RsvpDenied, self).get_context_data(**kwargs)
+			context['event'] =  event
+			return context
+		except Exception,e:
+			raise Http404()
+
 class RsvpSuccess(TemplateView):
 	template_name = 'fosstr_rsvp/success.html'
 
@@ -67,6 +80,8 @@ class EventView(FormView):
     		is_guest_present = Guest.objects.filter(Q(email=guest_email))
     		if is_guest_present:
     			return HttpResponseRedirect('/rsvp/event/%s/duplicate/' % slug )
+    		if guest_attending_status.lower() == 'no':
+    			return HttpResponseRedirect('/rsvp/event/%s/deniedrsvp/' % slug )
     		Guest.objects.create(event=event, email=guest_email, name=guest_name, attending_status=guest_attending_status,associated_organization=guest_associated_organization, is_student=guest_is_student)
     		return HttpResponseRedirect('/rsvp/event/%s/thanks/' % slug)
     	except Exception,f:
