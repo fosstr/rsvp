@@ -10,5 +10,6 @@ urlpatterns = patterns('',
     url(r'^rsvp/event/(?P<slug>[A-Za-z0-9_-]+)/thanks/$', views.RsvpSuccess.as_view(),name='thanks'),
     url(r'^rsvp/event/(?P<slug>[A-Za-z0-9_-]+)/failed/$', views.RsvpFailed.as_view(), name='failed'),
     url(r'^rsvp/event/(?P<slug>[A-Za-z0-9_-]+)/deniedrsvp/$', views.RsvpDenied.as_view(), name='deniedrsvp'),
+    url(r'^rsvp/event/(?P<slug>[A-Za-z0-9_-]+)/full/$', views.EventFull.as_view(), name='full'),
     url(r'^rsvp/event/(?P<slug>[A-Za-z0-9_-]+)/duplicate/$', views.DuplicateRsvp.as_view(), name='duplicate'),
 )

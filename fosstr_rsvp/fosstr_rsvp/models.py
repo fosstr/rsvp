@@ -15,6 +15,7 @@ IS_STUDENT_CHOICE = (
 class Event(models.Model):
     title = models.CharField(max_length=255)    
     slug = models.SlugField(help_text='Short label for the event, containing only letters, numbers, underscores or hyphens')
+    maximum_attendees = models.PositiveIntegerField(blank=False, help_text='Maximum number of attendes for the event. i.e. No more RSVP allowed after limit is reached')
     description = models.TextField()
     date_of_event = models.DateTimeField()
     hosted_by = models.CharField(max_length=255, help_text='The name of the person/organization hosting the event.', blank=False, default='')

@@ -1,0 +1,16 @@
+{% extends 'fosstr_rsvp/base.html' %}
+
+{% load bootstrap3 %}
+
+{% block title %}Event Full{% endblock %}
+
+{% block bootstrap3_content %}
+<center>
+<div class="alert alert-warning" role="alert">
+        <strong>Alas! The event is full</strong></br>
+        We have reached the maximum attendee limit for this event</br>
+        Come back and try again incase someone opts out</br>
+        We are working towards accomodating more people as you read this</br>
+</div>
+<center>
+{% endblock %}

@@ -6,7 +6,7 @@ class EventAdmin(admin.ModelAdmin):
     date_hiearchy = 'date_of_event'
     fieldsets = (
         (None, {
-            'fields': ('title', 'slug', 'description', 'date_of_event'),
+            'fields': ('title', 'slug', 'description', 'date_of_event','maximum_attendees'),
         }),
         ('Event Details', {
             'fields': ('hosted_by', 'street_address', 'city', 'state', 'zip_code', 'contact_email'),
