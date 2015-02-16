@@ -9,7 +9,7 @@ class EventAdmin(admin.ModelAdmin):
             'fields': ('title', 'slug', 'description', 'date_of_event','maximum_attendees'),
         }),
         ('Event Details', {
-            'fields': ('hosted_by', 'street_address', 'city', 'state', 'zip_code', 'contact_email'),
+            'fields': ('hosted_by', 'street_address', 'city', 'state', 'zip_code', 'contact_email','telephone1','telephone2'),
         })
     )
     list_display = ('title', 'date_of_event')

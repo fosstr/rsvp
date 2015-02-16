@@ -90,6 +90,7 @@ class EventView(FormView):
     		guest_associated_organization = request.REQUEST['associated_organization']
     		guest_attending_status = request.REQUEST['will_you_be_attending']
     		guest_is_student = request.REQUEST['are_you_a_student']
+    		wants_updates = request.REQUEST['receive_email_updates_for_this_event']
     		is_guest_present = Guest.objects.filter(Q(email=guest_email))
     		rsvp_count = Guest.objects.count()
     		if rsvp_count >= event.maximum_attendees:
@@ -105,7 +106,7 @@ class EventView(FormView):
     		# g_recaptcha_response = request.REQUEST['g-recaptcha-response']
     		# guest_IP = utils.get_client_ip(request)
     		# priv_key = settings.RECAPTCHA_PRV_KEY
-    		Guest.objects.create(event=event, email=guest_email, name=guest_name, attending_status=guest_attending_status,associated_organization=guest_associated_organization, is_student=guest_is_student)
+    		Guest.objects.create(event=event, email=guest_email, name=guest_name, attending_status=guest_attending_status,associated_organization=guest_associated_organization, is_student=guest_is_student, wants_updates= wants_updates)
     		return HttpResponseRedirect('/rsvp/event/%s/thanks/' % slug)
     	except Exception,f:
     		print "Exception: ",f

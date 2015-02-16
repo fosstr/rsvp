@@ -22,7 +22,8 @@
             <strong>Address:</strong><br>
             {{ event.street_address }}<br>
             {{ event.city }}, {{ event.state }} {{ event.zip_code }}<br>
-            {{ event.telephone }}
+            <strong>Contact Us:</strong>
+            +91-{{ event.telephone1 }}, +91-{{ event.telephone2 }} or {{ event.contact_email }} 
         </p>
     {% endif %}
     </div>
