@@ -115,7 +115,7 @@ LOGGING = {
             'handlers':['file',],
             'propagate': True,
             'level':'DEBUG'
-        }
+        },
         'fosstr_rsvp': {
             'handlers': ['file'],
             'level': 'DEBUG',
