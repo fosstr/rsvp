@@ -6,4 +6,40 @@ The app has been heavily influenced by [bitmazk/django-event-rsvp](https://githu
 
 Feel free to use, improve and send us a pull request
 
-- Team FOSSTR
+\- Team FOSSTR
+
+-------------
+Installation
+-------------
+
+It is recommended to run this app inside a virtual environment
+
+To install `virtualenv` through `pip`
+
+`$ pip install virtualenv`
+
+
+Once installed. Clone the repository
+
+`$ git clone https://github.com/fosstr/rsvp.git`
+
+Enter the working dir and create a virtual environment
+
+`$ virtualenv .venv`
+
+and activate it by
+
+`$ source .venv/bin/activate`
+
+Install the requirements using `pip` as 
+
+`$ pip install -r requirements.txt`
+
+Run the local django webserver using 
+
+`$ python manage.py runserver`
+
+If you install any other packages, add them to requirements.txt using 
+
+`$ pip freeze > requirements.txt`
+
