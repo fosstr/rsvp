@@ -35,6 +35,12 @@ Install the requirements using `pip` as
 
 `$ pip install -r requirements.txt`
 
+You have everything needed to run the app.
+
+Make sure the models are inline with the DB Schema
+
+`$ python manage.py syncdb`
+
 Run the local django webserver using 
 
 `$ python manage.py runserver`
