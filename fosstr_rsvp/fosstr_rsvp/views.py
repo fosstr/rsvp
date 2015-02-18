@@ -5,9 +5,9 @@ from django.db.models import Q
 from forms import RSVPForm
 from django.views.generic import FormView
 from django.views.generic.base import TemplateView
+from django.shortcuts import render
 
 import utils
-from validate_email_address import validate_email
 
 class ShowEvents(TemplateView):
 	template_name = 'fosstr_rsvp/show_events.html'
@@ -24,7 +24,7 @@ class DuplicateRsvp(TemplateView):
 	def get_context_data(self, **kwargs):
 		try:
 			slug = self.kwargs['slug']
-			event = get_object_or_404(Event, slug=slug)
+			event = get_object_or_404(Event, slug=slug )
 			context = super(DuplicateRsvp, self).get_context_data(**kwargs)
 			context['event'] =  event
 			return context
@@ -37,7 +37,7 @@ class RsvpDenied(TemplateView):
 	def get_context_data(self, **kwargs):
 		try:
 			slug = self.kwargs['slug']
-			event = get_object_or_404(Event, slug=slug)
+			event = get_object_or_404(Event, slug=slug )
 			context = super(RsvpDenied, self).get_context_data(**kwargs)
 			context['event'] =  event
 			return context
@@ -50,7 +50,7 @@ class RsvpSuccess(TemplateView):
 	def get_context_data(self, **kwargs):
 		try:
 			slug = self.kwargs['slug']
-			event = get_object_or_404(Event, slug=slug)
+			event = get_object_or_404(Event, slug=slug )
 			context = super(RsvpSuccess, self).get_context_data(**kwargs)
 			context['event'] =  event
 			return context
@@ -62,7 +62,7 @@ class RsvpFailed(TemplateView):
 
 	def get_context_data(self, **kwargs):
 		slug = self.kwargs['slug']
-		event = get_object_or_404(Event, slug=slug)
+		event = get_object_or_404(Event, slug=slug )
 		context = super(RsvpFailed, self).get_context_data(**kwargs)
 		context['event'] =  event
 		return context
@@ -72,7 +72,7 @@ class EventFull(TemplateView):
 
 	def get_context_data(self, **kwargs):
 		slug = self.kwargs['slug']
-		event = get_object_or_404(Event, slug=slug)
+		event = get_object_or_404(Event, slug=slug )
 		context = super(EventFull, self).get_context_data(**kwargs)
 		context['event'] =  event
 		return context
@@ -84,37 +84,45 @@ class EventView(FormView):
     def post(self, request, *args, **kwargs):
     	try:
     		slug = self.kwargs['slug']
-    		event = get_object_or_404(Event, slug=slug)
+    		rsvp_form = RSVPForm(request.POST)
+    		event = get_object_or_404(Event, slug=slug )
+    		if not rsvp_form.is_valid():
+    			# THis is so that we maintain state
+    			# The previous filled form is not lost
+    			variables = {'form': rsvp_form, 'event': event }
+    			return render(request, self.template_name, variables )
+    		# Pulling out values from the request
     		guest_email = request.REQUEST['your_email']
     		guest_name = request.REQUEST['name']
     		guest_associated_organization = request.REQUEST['associated_organization']
     		guest_attending_status = request.REQUEST['will_you_be_attending']
     		guest_is_student = request.REQUEST['are_you_a_student']
-    		wants_updates = request.REQUEST['receive_email_updates_for_this_event']
-    		is_guest_present = Guest.objects.filter(Q(email=guest_email))
-    		rsvp_count = Guest.objects.count()
+    		guest_wants_updates = request.REQUEST['receive_email_updates_for_this_event']
+
+    		# Getting current RSVP count  so that we are not above limit
+    		rsvp_count = Guest.objects.filter(Q(attending_status='no')).count()
     		if rsvp_count >= event.maximum_attendees:
-    			return HttpResponseRedirect('/rsvp/event/%s/full/' % slug)
-    		is_email_valid = validate_email(guest_email, check_mx=True, verify=True)
-    		print "Is email valid : ", is_email_valid
-    		if not is_email_valid:
-    			return HttpResponseRedirect('/rsvp/event/%s/failed/' % slug)
+    			return HttpResponseRedirect('/rsvp/event/%s/full/' % slug )
+
+    		# Checking if this email ID has been used to RSVP before
+    		is_guest_present = Guest.objects.filter(Q(email=guest_email))
     		if is_guest_present:
     			return HttpResponseRedirect('/rsvp/event/%s/duplicate/' % slug )
+
+    		# If denied RSVP
     		if guest_attending_status.lower() == 'no':
     			return HttpResponseRedirect('/rsvp/event/%s/deniedrsvp/' % slug )
-    		# g_recaptcha_response = request.REQUEST['g-recaptcha-response']
-    		# guest_IP = utils.get_client_ip(request)
-    		# priv_key = settings.RECAPTCHA_PRV_KEY
-    		Guest.objects.create(event=event, email=guest_email, name=guest_name, attending_status=guest_attending_status,associated_organization=guest_associated_organization, is_student=guest_is_student, wants_updates= wants_updates)
-    		return HttpResponseRedirect('/rsvp/event/%s/thanks/' % slug)
-    	except Exception,f:
-    		print "Exception: ",f
-    		return HttpResponseRedirect('/rsvp/event/%s/failed/' % slug)
+
+    		# Accept RSVP. Create model instance
+    		Guest.objects.create(event=event, email=guest_email, name=guest_name, attending_status=guest_attending_status,associated_organization=guest_associated_organization, is_student=guest_is_student, wants_updates= guest_wants_updates)
+    		return HttpResponseRedirect('/rsvp/event/%s/thanks/' % slug )
+    	except Exception, exp:
+    		print "Exception: ", exp
+    		return HttpResponseRedirect('/rsvp/event/%s/failed/' % slug )
 
     def get_context_data(self, **kwargs):
     	slug = self.kwargs['slug']
-    	event = get_object_or_404(Event, slug=slug)
+    	event = get_object_or_404(Event, slug=slug )
         context = super(EventView, self).get_context_data(**kwargs)
         context['event'] =  event
         context['layout'] = self.request.GET.get('layout', 'vertical')
