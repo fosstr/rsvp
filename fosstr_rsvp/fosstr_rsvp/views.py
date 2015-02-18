@@ -97,10 +97,15 @@ class EventView(FormView):
     		guest_associated_organization = request.REQUEST['associated_organization']
     		guest_attending_status = request.REQUEST['will_you_be_attending']
     		guest_is_student = request.REQUEST['are_you_a_student']
-    		guest_wants_updates = request.REQUEST['receive_email_updates_for_this_event']
+    		guest_wants_updates = False
+
+    		# We have to do this since the field is a Boolean check box.
+    		# Not clicking true is going to not return anything
+    		if request.REQUEST.has_key('receive_email_updates_for_this_event'):
+    			guest_wants_updates = request.REQUEST['receive_email_updates_for_this_event']
 
     		# Getting current RSVP count  so that we are not above limit
-    		rsvp_count = Guest.objects.filter(Q(attending_status='no')).count()
+    		rsvp_count = Guest.objects.filter(Q(attending_status='yes')).count()
     		if rsvp_count >= event.maximum_attendees:
     			return HttpResponseRedirect('/rsvp/event/%s/full/' % slug )
 
