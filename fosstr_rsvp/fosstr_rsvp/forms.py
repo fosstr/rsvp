@@ -13,6 +13,7 @@ class RSVPForm(forms.Form):
     associated_organization = forms.CharField(max_length=128,required=False)
     will_you_be_attending = forms.ChoiceField(choices=VISIBLE_ATTENDING_CHOICES,required=True, initial='yes')
     are_you_a_student = forms.ChoiceField(choices=IS_STUDENT_CHOICE,required=True, initial='no')
+    captcha_field_hidden = forms.CharField(widget=forms.HiddenInput(),required=False,initial='none')
 
     def clean_your_email(self):
     	data = self.cleaned_data['your_email']

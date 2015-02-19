@@ -9,7 +9,7 @@ Feel free to use, improve and send us a pull request
 \- Team FOSSTR
 
 -------------
-Installation
+Getting Started
 -------------
 
 It is recommended to run this app inside a virtual environment
@@ -17,7 +17,6 @@ It is recommended to run this app inside a virtual environment
 To install `virtualenv` through `pip`
 
 `$ pip install virtualenv`
-
 
 Once installed. Clone the repository
 
@@ -34,6 +33,8 @@ and activate it by
 Install the requirements using `pip` as 
 
 `$ pip install -r requirements.txt`
+
+Users will also have to setup a [reCAPTCHA](http://www.google.com/recaptcha/intro/index.html) account and store the Private key and Site key as the `RECAPTCHA_PRV_KEY` and the `RECAPTCHA_SITE_KEY` environment variables respectively
 
 You have everything needed to run the app.
 

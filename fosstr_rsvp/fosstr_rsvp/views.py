@@ -7,6 +7,7 @@ from django.views.generic import FormView
 from django.views.generic.base import TemplateView
 from django.shortcuts import render
 
+import sys
 import utils
 
 class ShowEvents(TemplateView):
@@ -86,11 +87,26 @@ class EventView(FormView):
     		slug = self.kwargs['slug']
     		rsvp_form = RSVPForm(request.POST)
     		event = get_object_or_404(Event, slug=slug )
+
     		if not rsvp_form.is_valid():
     			# THis is so that we maintain state
     			# The previous filled form is not lost
     			variables = {'form': rsvp_form, 'event': event }
     			return render(request, self.template_name, variables )
+
+    		# Validate the CAPTCHA
+    		try:
+    			captcha_resp = request.REQUEST['g-recaptcha-response']
+    		except:
+    			variables = {'form': rsvp_form, 'event': event }
+    			return render(request, self.template_name, variables )
+    		remote_ip = utils.get_client_ip(request)
+    		captcha_validity = utils.validateCaptcha(captcha_resp, remote_ip)
+    		if not captcha_validity:
+    			rsvp_form.add_error('captcha_field_hidden',"reCAPTCHA is not complete or incorrect. Complete the CAPTCHA to proceed")
+    			variables = {'form': rsvp_form, 'event': event }
+    			return render(request, self.template_name, variables )
+
     		# Pulling out values from the request
     		guest_email = request.REQUEST['your_email']
     		guest_name = request.REQUEST['name']
@@ -122,7 +138,6 @@ class EventView(FormView):
     		Guest.objects.create(event=event, email=guest_email, name=guest_name, attending_status=guest_attending_status,associated_organization=guest_associated_organization, is_student=guest_is_student, wants_updates= guest_wants_updates)
     		return HttpResponseRedirect('/rsvp/event/%s/thanks/' % slug )
     	except Exception, exp:
-    		print "Exception: ", exp
     		return HttpResponseRedirect('/rsvp/event/%s/failed/' % slug )
 
     def get_context_data(self, **kwargs):

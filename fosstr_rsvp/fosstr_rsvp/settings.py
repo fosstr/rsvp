@@ -122,3 +122,10 @@ LOGGING = {
         },
     }
 }
+# For Local Testing
+"""
+These keys are generated for localhost and for testing. Ideally, A new set of keys should be created for prod
+"""
+RECAPTCHA_VERIFY_URL = "https://www.google.com/recaptcha/api/siteverify"
+RECAPTCHA_SITE_KEY = os.environ.get('RECAPTCHA_SITE_KEY')
+RECAPTCHA_PRV_KEY = os.environ.get('RECAPTCHA_PRV_KEY')
