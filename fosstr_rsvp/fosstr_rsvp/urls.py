@@ -3,6 +3,9 @@ from django.contrib import admin
 from django.views.decorators.csrf import csrf_exempt   
 import views
 
+handler404 = 'fosstr_rsvp.views.error404'
+handler500 = 'fosstr_rsvp.views.error500'
+
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^rsvp/events/$', views.ShowEvents.as_view(), name='events'),

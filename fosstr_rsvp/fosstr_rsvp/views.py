@@ -6,9 +6,21 @@ from forms import RSVPForm
 from django.views.generic import FormView
 from django.views.generic.base import TemplateView
 from django.shortcuts import render
+from django.shortcuts import render_to_response
+from django.template import RequestContext
+
 
 import sys
 import utils
+
+from django.shortcuts import render
+
+def error404(request):
+    return render(request,'fosstr_rsvp/404.html')
+
+def error500(request):
+    return render(request,'fosstr_rsvp/500.html')
+
 
 class ShowEvents(TemplateView):
 	template_name = 'fosstr_rsvp/show_events.html'
