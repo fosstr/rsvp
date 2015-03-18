@@ -8,7 +8,8 @@ from django.views.generic.base import TemplateView
 from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-
+import datetime
+from django.utils import timezone
 
 import sys
 import utils
@@ -27,7 +28,8 @@ class ShowEvents(TemplateView):
 
 	def get_context_data(self, **kwargs):
 		context = super(ShowEvents, self).get_context_data(**kwargs)
-		events = Event.objects.all()
+		events = Event.objects.filter(Q(date_of_event__gte = timezone.now()))
+        # events = Event.objects.all()
 		context['events'] = events
 		return context
 
@@ -79,6 +81,16 @@ class RsvpFailed(TemplateView):
 		context = super(RsvpFailed, self).get_context_data(**kwargs)
 		context['event'] =  event
 		return context
+
+class EventPassed(TemplateView):
+    template_name = 'fosstr_rsvp/passed.html'
+
+    def get_context_data(self, **kwargs):
+        slug = self.kwargs['slug']
+        event = get_object_or_404(Event, slug=slug )
+        context = super(EventPassed, self).get_context_data(**kwargs)
+        context['event'] =  event
+        return context
 
 class EventFull(TemplateView):
 	template_name = 'fosstr_rsvp/full.html'
@@ -156,6 +168,8 @@ class EventView(FormView):
     	slug = self.kwargs['slug']
     	event = get_object_or_404(Event, slug=slug )
         context = super(EventView, self).get_context_data(**kwargs)
+        if event.date_of_event <= timezone.now():
+            self.template_name = 'fosstr_rsvp/passed.html'
         context['event'] =  event
         context['layout'] = self.request.GET.get('layout', 'vertical')
         return context

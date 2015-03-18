@@ -4,7 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 import views
 
 handler404 = 'fosstr_rsvp.views.error404'
-handler500 = 'fosstr_rsvp.views.error500'
+# handler500 = 'fosstr_rsvp.views.error500'
 
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
@@ -15,4 +15,5 @@ urlpatterns = patterns('',
     url(r'^rsvp/event/(?P<slug>[A-Za-z0-9_-]+)/deniedrsvp/$', views.RsvpDenied.as_view(), name='deniedrsvp'),
     url(r'^rsvp/event/(?P<slug>[A-Za-z0-9_-]+)/full/$', views.EventFull.as_view(), name='full'),
     url(r'^rsvp/event/(?P<slug>[A-Za-z0-9_-]+)/duplicate/$', views.DuplicateRsvp.as_view(), name='duplicate'),
+    url(r'^rsvp/event/(?P<slug>[A-Za-z0-9_-]+)/past_event/$', views.EventPassed.as_view(), name='past_event'),
 )
