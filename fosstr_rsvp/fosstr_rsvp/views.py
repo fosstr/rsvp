@@ -8,7 +8,6 @@ from django.views.generic.base import TemplateView
 from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-import datetime
 from django.utils import timezone
 
 import sys
@@ -154,12 +153,11 @@ class EventView(FormView):
     		if is_guest_present:
     			return HttpResponseRedirect('/rsvp/event/%s/duplicate/' % slug )
 
+    		Guest.objects.create(event=event, email=guest_email, name=guest_name, attending_status=guest_attending_status,associated_organization=guest_associated_organization, is_student=guest_is_student, wants_updates= guest_wants_updates)
     		# If denied RSVP
     		if guest_attending_status.lower() == 'no':
     			return HttpResponseRedirect('/rsvp/event/%s/deniedrsvp/' % slug )
-
-    		# Accept RSVP. Create model instance
-    		Guest.objects.create(event=event, email=guest_email, name=guest_name, attending_status=guest_attending_status,associated_organization=guest_associated_organization, is_student=guest_is_student, wants_updates= guest_wants_updates)
+    		# Accept RSVP. 
     		return HttpResponseRedirect('/rsvp/event/%s/thanks/' % slug )
     	except Exception, exp:
     		return HttpResponseRedirect('/rsvp/event/%s/failed/' % slug )
