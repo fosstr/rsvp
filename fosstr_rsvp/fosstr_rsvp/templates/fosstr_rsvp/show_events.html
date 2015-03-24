@@ -5,20 +5,49 @@
 {% block title %}Showing all events under FOSSTR{% endblock %}
 
 {% block bootstrap3_content %}
-<center>
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Upcoming and Past events under FOSSTR</div>
+  <div class="panel-body">
+    <p>Click on the event link to RSVP to an event. Let us know you are coming so we can accomodate everyone better</p>
+  </div>
+	<div class="page-header">
+		<h2>Upcoming Events</h2>
+	</div>
 	<table class="table table-striped">
 		<tr>
 			<th>Event Name</th>
-			<th>Description</th>
 			<th>Date</th>
+			<th>Description</th>
+			<th>Attendee Capacity</th>
 		</tr>
 		{% for event in events %}
 		<tr>
 			<td> <a href="/rsvp/event/{{ event.slug }}/"> {{ event.title }} </a></td>
-			<td> {{ event.description }}</td>
 			<td> {{ event.date_of_event }}</td>
+			<td> {{ event.description }}</td>
+			<td> {{ event.maximum_attendees }}</td>
 		</tr>
 		{% endfor %}
 	</table>
-</center>
+	<div class="page-header">
+		<h2>Past Events</h2>
+	</div>
+	<table class="table table-striped">
+		<tr>
+			<th>Event Name</th>
+			<th>Date</th>
+			<th>Description</th>
+			<th>Attendee Capacity</th>
+		</tr>
+		{% for past_event in past_events %}
+		<tr>
+			<td> <a href="/rsvp/event/{{ past_event.slug }}/"> {{ past_event.title }} </a></td>
+			<td> {{ past_event.date_of_event }}</td>
+			<td> {{ past_event.description }}</td>
+			<td> {{ past_event.maximum_attendees }}</td>
+		</tr>
+		{% endfor %}
+	</table>
+</div>
 {% endblock %}
