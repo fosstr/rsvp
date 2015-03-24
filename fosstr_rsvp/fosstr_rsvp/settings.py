@@ -20,9 +20,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = '!ub%nyha=zn#r@o0+@8+_xh(o4(ig7@u4nh+w)+23q=g0m5)c0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-TEMPLATE_DEBUG = False
+TEMPLATE_DEBUG = True
 
 # Change this during Production
 ALLOWED_HOSTS = ['*']
@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap3',
+    'django_cron',
     'fosstr_rsvp',
 )
 
@@ -71,7 +72,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -129,3 +130,17 @@ These keys are generated for localhost and for testing. Ideally, A new set of ke
 RECAPTCHA_VERIFY_URL = "https://www.google.com/recaptcha/api/siteverify"
 RECAPTCHA_SITE_KEY = os.environ.get('RECAPTCHA_SITE_KEY')
 RECAPTCHA_PRV_KEY = os.environ.get('RECAPTCHA_PRV_KEY')
+
+
+# Settings for Email Updates
+MAIL_SERVER = 'mail.fosstr.org'
+MAIL_SERVER_PORT = 465
+EMAIL_USERNAME = os.environ.get('RSVP_EMAIL_USER')
+EMAIL_PASSWORD =  os.environ.get('RSVP_EMAIL_PASS')
+EMAIL_SENDER = "Do Not Reply <%s@%s>" % (EMAIL_USERNAME, MAIL_SERVER)
+MAILING_LIST_EMAIL = 'fosstr@fosstr.org'
+
+# Cron 
+CRON_CLASSES = [
+    'cron.WeeklyReminderCron',
+]

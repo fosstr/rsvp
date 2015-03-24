@@ -9,19 +9,20 @@
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <div class="jumbotron">
     <h2>{{ event.title }}</h2>
-    <p>Date: {{ event.date_of_event|date:"F j, Y @ f a" }}</p>
+    <p><strong>Date: </strong>{{ event.date_of_event|date:"F j, Y @ f a" }}</p>
     <p>{{ event.description|linebreaksbr }}</p>
     {% if event.hosted_by %}
         <p>
-            <strong>Hosted By:</strong>
-            {{ event.hosted_by }}
+            <strong>Speaker: </strong> {{ event.speaker }} </br>            
+            <strong>Hosted By:</strong> {{ event.hosted_by }}
         </p>
     {% endif %}   
     {% if event.street_address %}
         <p>
             <strong>Address:</strong><br>
+            {{ event.hosted_by }}<br>
             {{ event.street_address }}<br>
-            {{ event.city }}, {{ event.state }} {{ event.zip_code }}<br>
+            {{ event.city }}, {{ event.state }} - {{ event.zip_code }}<br>
             <strong>Contact Us:</strong>
             +91-{{ event.telephone1 }}, +91-{{ event.telephone2 }} or {{ event.contact_email }} 
         </p>

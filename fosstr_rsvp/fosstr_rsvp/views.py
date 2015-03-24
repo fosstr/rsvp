@@ -10,7 +10,6 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.utils import timezone
 
-import sys
 import utils
 
 from django.shortcuts import render
@@ -28,8 +27,9 @@ class ShowEvents(TemplateView):
 	def get_context_data(self, **kwargs):
 		context = super(ShowEvents, self).get_context_data(**kwargs)
 		events = Event.objects.filter(Q(date_of_event__gte = timezone.now()))
-        # events = Event.objects.all()
+		past_events = Event.objects.filter(Q(date_of_event__lte = timezone.now()))
 		context['events'] = events
+		context['past_events'] = past_events
 		return context
 
 class DuplicateRsvp(TemplateView):
@@ -144,12 +144,12 @@ class EventView(FormView):
     			guest_wants_updates = request.REQUEST['receive_email_updates_for_this_event']
 
     		# Getting current RSVP count  so that we are not above limit
-    		rsvp_count = Guest.objects.filter(Q(attending_status='yes')).count()
+    		rsvp_count = Guest.objects.filter(Q(attending_status='yes') & Q(event_id=event.id)).count()
     		if rsvp_count >= event.maximum_attendees:
     			return HttpResponseRedirect('/rsvp/event/%s/full/' % slug )
 
     		# Checking if this email ID has been used to RSVP before
-    		is_guest_present = Guest.objects.filter(Q(email=guest_email))
+    		is_guest_present = Guest.objects.filter(Q(email=guest_email) & Q(event_id=event.id))
     		if is_guest_present:
     			return HttpResponseRedirect('/rsvp/event/%s/duplicate/' % slug )
 
@@ -158,8 +158,12 @@ class EventView(FormView):
     		if guest_attending_status.lower() == 'no':
     			return HttpResponseRedirect('/rsvp/event/%s/deniedrsvp/' % slug )
     		# Accept RSVP. 
+    		if guest_wants_updates:
+    			venue_info = [event.hosted_by, event.street_address, event.city, event.state ]
+    			utils.sendConfirmationEmail(guest_email, guest_name, event.title, event.description, event.date_of_event, venue_info, event.speaker)
     		return HttpResponseRedirect('/rsvp/event/%s/thanks/' % slug )
     	except Exception, exp:
+    		print "Exception: ",exp
     		return HttpResponseRedirect('/rsvp/event/%s/failed/' % slug )
 
     def get_context_data(self, **kwargs):

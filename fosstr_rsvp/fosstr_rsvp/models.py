@@ -13,11 +13,12 @@ IS_STUDENT_CHOICE = (
     )
 
 class Event(models.Model):
-    title = models.CharField(max_length=255)    
+    title = models.CharField(max_length=255, blank=False, help_text='The Title of the talk')
+    speaker = models.CharField(max_length=255, blank=False, help_text='The Speaker delivering the talk')    
     slug = models.SlugField(help_text='Short label for the event, containing only letters, numbers, underscores or hyphens')
     maximum_attendees = models.PositiveIntegerField(blank=False, help_text='Maximum number of attendes for the event. i.e. No more RSVP allowed after limit is reached')
-    description = models.TextField()
-    date_of_event = models.DateTimeField()
+    description = models.TextField(help_text='A brief description of the talk. The topics to be discussed and the deliverables')
+    date_of_event = models.DateTimeField(blank=False, help_text='The date and time at which the talk is scheduled')
     hosted_by = models.CharField(max_length=255, help_text='The name of the person/organization hosting the event.', blank=False, default='')
     street_address = models.CharField(max_length=255, help_text='The street address where the event is being held.', blank=False, default='')
     city = models.CharField(max_length=64, help_text='The city where the event is being held.', blank=False, default='')
