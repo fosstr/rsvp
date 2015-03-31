@@ -142,5 +142,5 @@ MAILING_LIST_EMAIL = 'fosstr@fosstr.org'
 
 # Cron 
 CRON_CLASSES = [
-    'cron.WeeklyReminderCron',
+    'fosstr_rsvp.cron.WeeklyReminderCron',
 ]
