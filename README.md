@@ -50,3 +50,20 @@ If you install any other packages, add them to requirements.txt using
 
 `$ pip freeze > requirements.txt`
 
+
+-------------
+Settings
+-------------
+
+The following variables need to be defined in the shell environment from which the Python instances that launches django is present
+
+RECAPTCHA_PRV_KEY -  The private key for the reCAPTCHA service
+
+RECAPTCHA_SITE_KEY -  The Site key for the reCAPTCHA service
+
+RSVP_EMAIL_USER - Email address to use for sending RSVP confirmations and reminders
+
+RSVP_EMAIL_PASS - Password for the above account
+
+Also additionally, You will have to add the correct key into event_view.html for reCAPTCHA
+
