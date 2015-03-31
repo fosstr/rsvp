@@ -120,8 +120,9 @@ http://www.fosstr.org
 	except Exception, e:
 	    print "Error: unable to send email ", e
 
-def sendSummaryToML(guest_list, venue, event_title, event_description, event_speaker ):
-	recipients = settings.MAILING_LIST_EMAIL
+def sendSummaryToML(guest_list, venue, event_title, event_description, event_speaker, date_of_event ):
+	recipients = [settings.MAILING_LIST_EMAIL,'fosstr@fosstr.org']
+	guest_name = "Glorious Mailing list"
 	subject = "[Summary] Upcoming event - %s" % event_title
 	venue_info = ", ".join(venue)
 	content = """

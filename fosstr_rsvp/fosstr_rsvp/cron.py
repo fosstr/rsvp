@@ -1,7 +1,10 @@
+#!/usr/bin/env python
+
 from django_cron import CronJobBase, Schedule
 from django.utils import timezone
 from django.db.models import Q
 from django.utils import timezone
+import datetime
 
 from models import Event, Guest
 
@@ -17,7 +20,7 @@ class WeeklyReminderCron(CronJobBase):
 		guest_list = []
 
 		delta_start_date = timezone.now()
-		delta_end_date = timezonne.now() + datetime.timedelta(hours=24)
+		delta_end_date = timezone.now() + datetime.timedelta(hours=24)
 
 		events_in_next_24_hours = Event.objects.filter( Q( date_of_event__range = [ delta_start_date, delta_end_date] ) ).distinct()
 		for event in events_in_next_24_hours:
@@ -26,7 +29,6 @@ class WeeklyReminderCron(CronJobBase):
 			for guest in guests:
 				guest_list.append(guest.name)
 				utils.sendReminderEmail( guest.name,guest.email,venue_info, event.title, event.description, event.speaker, event.date_of_event )
-
 			# Send update to mailing list about event
 			# Include: All Guests, Event Details
 			utils.sendSummaryToML(guest_list, venue_info, event.title, event.description, event.speaker, event.date_of_event )
