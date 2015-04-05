@@ -61,7 +61,7 @@ http://www.fosstr.org
 # FOSSTR Meets are free for anyone to attend. There are absolutely no fees or strings attached
 # Just come with an open mind and willingness to share and learn
 
-	""" % (random.choice(HELLO_GREETINGS), name, title, speaker ,description, date_of_event, venue_info ,random.choice(CLOSING_REMARKS))
+	""" % (random.choice(HELLO_GREETINGS), name, title, speaker ,description, date_of_event.strftime("%A, %B %d %Y at %I:%M %p IST"), venue_info ,random.choice(CLOSING_REMARKS))
 
 	message = ("From: %s\r\nTo: %s\r\nSubject: %s\r\n%s" %
 	           (settings.EMAIL_SENDER, ", ".join(recipients), subject, content))
@@ -105,7 +105,7 @@ http://www.fosstr.org
 # FOSSTR Meets are free for anyone to attend. There are absolutely no fees or strings attached
 # Just come with an open mind and willingness to share and learn
 
-	""" % (random.choice(HELLO_GREETINGS), guest_name, event_title, event_speaker , event_description, date_of_event, venue_info ,random.choice(CLOSING_REMARKS))
+	""" % (random.choice(HELLO_GREETINGS), guest_name, event_title, event_speaker , event_description, date_of_event.strftime("%A, %B %d %Y at %I:%M %p IST"), venue_info ,random.choice(CLOSING_REMARKS))
 
 	message = ("From: %s\r\nTo: %s\r\nSubject: %s\r\n%s" %
 	           (settings.EMAIL_SENDER, ", ".join(recipients), subject, content))
@@ -152,7 +152,7 @@ http://www.fosstr.org
 # FOSSTR Meets are free for anyone to attend. There are absolutely no fees or strings attached
 # Just come with an open mind and willingness to share and learn
 
-	""" % (random.choice(HELLO_GREETINGS), guest_name, event_title, event_speaker , event_description, date_of_event, venue_info , "\n".join(guest_list) ,random.choice(CLOSING_REMARKS))
+	""" % (random.choice(HELLO_GREETINGS), guest_name, event_title, event_speaker , event_description, date_of_event.strftime("%A, %B %d %Y at %I:%M %p IST"), venue_info , "\n".join(guest_list) ,random.choice(CLOSING_REMARKS))
 
 	message = ("From: %s\r\nTo: %s\r\nSubject: %s\r\n%s" %
 	           (settings.EMAIL_SENDER, ", ".join(recipients), subject, content))
