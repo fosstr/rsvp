@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.db.models import Q
 from django.utils import timezone
 import datetime
+from django.utils.timezone import localtime
 
 from models import Event, Guest
 
@@ -28,7 +29,7 @@ class WeeklyReminderCron(CronJobBase):
 			venue_info = [event.hosted_by, event.street_address, event.city, event.state ]
 			for guest in guests:
 				guest_list.append(guest.name)
-				utils.sendReminderEmail( guest.name,guest.email,venue_info, event.title, event.description, event.speaker, event.date_of_event )
+				utils.sendReminderEmail( guest.name,guest.email,venue_info, event.title, event.description, event.speaker, localtime(event.date_of_event) )
 			# Send update to mailing list about event
 			# Include: All Guests, Event Details
-			utils.sendSummaryToML(guest_list, venue_info, event.title, event.description, event.speaker, event.date_of_event )
+			utils.sendSummaryToML(guest_list, venue_info, event.title, event.description, event.speaker, localtime(event.date_of_event) )

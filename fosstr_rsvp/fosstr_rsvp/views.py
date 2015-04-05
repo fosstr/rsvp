@@ -9,6 +9,7 @@ from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.utils import timezone
+from django.utils.timezone import localtime
 
 import utils
 
@@ -160,7 +161,7 @@ class EventView(FormView):
     		# Accept RSVP. 
     		if guest_wants_updates:
     			venue_info = [event.hosted_by, event.street_address, event.city, event.state ]
-    			utils.sendConfirmationEmail(guest_email, guest_name, event.title, event.description, event.date_of_event, venue_info, event.speaker)
+    			utils.sendConfirmationEmail(guest_email, guest_name, event.title, event.description, localtime(event.date_of_event), venue_info, event.speaker)
     		return HttpResponseRedirect('/rsvp/event/%s/thanks/' % slug )
     	except Exception, exp:
     		print "Exception: ",exp
