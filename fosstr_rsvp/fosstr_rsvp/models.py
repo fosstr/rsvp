@@ -12,6 +12,8 @@ IS_STUDENT_CHOICE = (
     ('no', 'No')
     )
 
+EMAIL_UPDATE_CHOICES = [ (True, 'Yes'), (False, 'No') ]
+
 class Event(models.Model):
     title = models.CharField(max_length=255, blank=False, help_text='The Title of the talk')
     speaker = models.CharField(max_length=255, blank=False, help_text='The Speaker delivering the talk')    
@@ -37,4 +39,4 @@ class Guest(models.Model):
     attending_status = models.CharField(max_length=32 ,default='no_rsvp')
     is_student = models.CharField(max_length=32, default='no')
     rsvp_time = models.DateTimeField(default=datetime.datetime.now)
-    wants_updates = models.BooleanField(default=True,blank=False)
+    wants_updates = models.BooleanField(default=False ,blank=False)
