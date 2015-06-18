@@ -17,15 +17,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '!ub%nyha=zn#r@o0+@8+_xh(o4(ig7@u4nh+w)+23q=g0m5)c0'
+SECRET_KEY = os.environ.get('RSVP_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 TEMPLATE_DEBUG = True
 
 # Change this during Production
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['rsvp.fosstr.org']
 
 
 # Application definition
@@ -128,9 +128,8 @@ LOGGING = {
 These keys are generated for localhost and for testing. Ideally, A new set of keys should be created for prod
 """
 RECAPTCHA_VERIFY_URL = "https://www.google.com/recaptcha/api/siteverify"
-RECAPTCHA_SITE_KEY = os.environ.get('RECAPTCHA_SITE_KEY')
-RECAPTCHA_PRV_KEY = os.environ.get('RECAPTCHA_PRV_KEY')
-
+RECAPTCHA_SITE_KEY = os.environ.get('RSVP_RECAPTCHA_SITE_KEY')
+RECAPTCHA_PRV_KEY = os.environ.get('RSVP_RECAPTCHA_PRV_KEY')
 
 # Settings for Email Updates
 MAIL_SERVER = 'mail.fosstr.org'
