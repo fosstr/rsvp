@@ -24,7 +24,7 @@
             {{ event.street_address }}<br>
             {{ event.city }}, {{ event.state }} - {{ event.zip_code }}<br>
             <strong>Contact Us:</strong>
-            +91-{{ event.telephone1 }}, +91-{{ event.telephone2 }} or {{ event.contact_email }} 
+            {{ event.contact_email }} 
         </p>
     {% endif %}
     </div>
@@ -36,7 +36,7 @@
 </div>
     <form action="." role="form" method="post" enctype="multipart/form-data" class="form-vertical">
         {% bootstrap_form form %}
-	<div class="g-recaptcha" data-sitekey="6LeKIQITAAAAABVT66hsvRQOUikTUV8lA6zk2PUL"></div></br>
+	<div class="g-recaptcha" data-sitekey="6LfCBgYTAAAAAHPGhkXoh12COfH_IsAFIjCeN7eN"></div>
         {% buttons submit='RSVP' reset="Cancel" %}{% endbuttons %}
       </form>
   </div>
