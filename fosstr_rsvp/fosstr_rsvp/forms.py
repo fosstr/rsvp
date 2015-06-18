@@ -20,5 +20,5 @@ class RSVPForm(forms.Form):
     	data = self.cleaned_data['your_email']
     	is_email_valid = validate_email(self.cleaned_data['your_email'], check_mx=True, verify=True )
     	if not is_email_valid:
-    		raise forms.ValidationError("This email address could not be verified!")
+    		raise forms.ValidationError("This email address could not be verified!!")
     	return data
