@@ -57,9 +57,11 @@ Settings
 
 The following variables need to be defined in the shell environment from which the Python instances that launches django is present
 
-RECAPTCHA_PRV_KEY -  The private key for the reCAPTCHA service
+RSVP_SECRET_KEY - Django SECRET_KEY
 
-RECAPTCHA_SITE_KEY -  The Site key for the reCAPTCHA service
+RSVP_RECAPTCHA_PRV_KEY -  The private key for the reCAPTCHA service
+
+RSVP_RECAPTCHA_SITE_KEY -  The Site key for the reCAPTCHA service
 
 RSVP_EMAIL_USER - Email address to use for sending RSVP confirmations and reminders
 
